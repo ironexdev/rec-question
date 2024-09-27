@@ -11,17 +11,16 @@ export default function App() {
 
   const onCropComplete = (_croppedArea: any, croppedAreaPixels: any) => {
     console.log("onCropComplete fired");
-    setCroppedAreaPixels(croppedAreaPixels);
   };
 
   const handleCenterX = () => {
+    console.log("Image centered X , but no crop event triggered.");
     setCrop((prev) => ({ ...prev, x: 0 }));
-    console.log("Image centered, but no crop event triggered.");
   };
 
   const handleCenterY = () => {
+    console.log("Image centered Y, but no crop event triggered.");
     setCrop((prev) => ({ ...prev, y: 0 }));
-    console.log("Image centered, but no crop event triggered.");
   };
 
   return (
@@ -31,12 +30,12 @@ export default function App() {
           image={image}
           crop={crop}
           cropSize={cropSize}
-          zoom={zoom} // Added zoom prop for proper scaling
+          zoom={zoom}
           onCropChange={setCrop}
-          onZoomChange={setZoom} // Enable zoom change to fix dragging behavior
+          onZoomChange={setZoom}
           onCropComplete={onCropComplete}
           aspect={4 / 3}
-          restrictPosition={false} // Allow free movement of image
+          restrictPosition={false}
         />
       </div>
       <button onClick={handleCenterX}>Center Image X</button>
