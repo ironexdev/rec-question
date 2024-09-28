@@ -9,6 +9,7 @@ export default function App() {
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [key, setKey] = useState(0);
+  const [centerFired, setCenterFired] = useState(false);
 
   const onCropComplete = (_croppedArea: any, croppedAreaPixels: any) => {
     console.log("onCropComplete fired");
@@ -16,13 +17,13 @@ export default function App() {
   };
 
   const handleCenterX = () => {
-    console.log("Image centered X , but no crop event triggered.");
+    setCenterFired(true)
     setCrop((prev) => ({ ...prev, x: 0 }));
     setKey((prev) => prev + 1);
   };
 
   const handleCenterY = () => {
-    console.log("Image centered Y, but no crop event triggered.");
+    setCenterFired(true)
     setCrop((prev) => ({ ...prev, y: 0 }));
     setKey((prev) => prev + 1);
   };
@@ -31,8 +32,14 @@ export default function App() {
     <div className="container">
       <div className="crop-container">
         <Cropper
-          key={key}
           image={image}
+          onCropAreaChange={(_: any, croppedAreaPixels: any) => {
+            if(centerFired){
+              console.log("onCropAreaChange fired");
+              setCroppedAreaPixels(croppedAreaPixels)
+              setCenterFired(false)
+            }
+          }}
           crop={crop}
           cropSize={cropSize}
           zoom={zoom}
