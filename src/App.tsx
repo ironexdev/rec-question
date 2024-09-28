@@ -8,7 +8,6 @@ export default function App() {
   const [cropSize] = useState({ width: 400, height: 300 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-  const [key, setKey] = useState(0);
   const [centerFired, setCenterFired] = useState(false);
 
   const onCropComplete = (_croppedArea: any, croppedAreaPixels: any) => {
@@ -19,13 +18,11 @@ export default function App() {
   const handleCenterX = () => {
     setCenterFired(true)
     setCrop((prev) => ({ ...prev, x: 0 }));
-    setKey((prev) => prev + 1);
   };
 
   const handleCenterY = () => {
     setCenterFired(true)
     setCrop((prev) => ({ ...prev, y: 0 }));
-    setKey((prev) => prev + 1);
   };
 
   return (
