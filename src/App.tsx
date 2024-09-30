@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useRef, useState} from "react";
 import Cropper from "react-easy-crop";
 import "./styles.css";
 
@@ -8,7 +8,7 @@ export default function App() {
   const [cropSize] = useState({ width: 400, height: 300 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-  const [centerFired, setCenterFired] = useState(false);
+  const centerFired = useRef(false);
 
   const onCropComplete = (_croppedArea: any, croppedAreaPixels: any) => {
     console.log("onCropComplete fired");
@@ -16,12 +16,12 @@ export default function App() {
   };
 
   const handleCenterX = () => {
-    setCenterFired(true)
+    centerFired.current = true
     setCrop((prev) => ({ ...prev, x: 0 }));
   };
 
   const handleCenterY = () => {
-    setCenterFired(true)
+    centerFired.current = true
     setCrop((prev) => ({ ...prev, y: 0 }));
   };
 
@@ -31,10 +31,10 @@ export default function App() {
         <Cropper
           image={image}
           onCropAreaChange={(_: any, croppedAreaPixels: any) => {
-            if(centerFired){
+            if(centerFired.current){
               console.log("onCropAreaChange fired");
               setCroppedAreaPixels(croppedAreaPixels)
-              setCenterFired(false)
+              centerFired.current = false
             }
           }}
           crop={crop}
